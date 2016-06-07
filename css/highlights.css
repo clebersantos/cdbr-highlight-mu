@@ -1,0 +1,58 @@
+#highlights {
+	position: relative;
+}
+
+#highlights-loading {
+	position: absolute;
+	top: 35px;
+	left: 0px;
+	width: 20px;
+	height:20px;
+	background:url(../images/wpspin_light.gif) no-repeat center;
+}
+
+#highlights .highlights-sortable  a {
+	text-decoration: none;
+}
+
+#highlights .highlights-sortable li {
+	margin:0 0 10px 0;
+	padding:10px 10px 10px 10px;
+	background-color:#DDD;
+}
+
+#highlights .highlights-sortable li.ui-state-highlight { 
+	border: 2px dashed #bbb;
+    height: 70px;
+    background-color: transparent;
+}
+#highlights #highlights-activities-sortable li {
+	background-color: #E9E9E9;  	
+}
+
+#highlights li.ui-draggable:hover {
+	cursor: move;
+}
+
+#highlights #highlights-sortable li.ui-draggable {
+	background-color: #D2E7D0;
+	border: 1px solid #DDD;
+}	
+
+#highlights .highlights-row-actions {
+	font-size:10px;
+}
+
+#highlights .highlights-row-actions a {
+	text-decoration:none;
+}
+
+#highlights .ui-draggable-dragging {
+	/*width: 400px;*/
+	/*width: 36.5%;*/
+}
+
+#highlights-activities-sortable .separator,
+#highlights-activities-sortable .highlights-delete {
+	display: none;
+}
