@@ -54,6 +54,9 @@ class HighlightsMU
 		// ativar somente se for multisite
 		if( !is_multisite() )
 			return false;
+
+		// images sizes
+		add_image_size( 'highlight', 200, 200, true );
 	}
 
 	/**
@@ -634,9 +637,12 @@ class HighlightsMU
 		// load languages
 		load_plugin_textdomain( 'highlights_mu', false, $this->path . 'lang/' );
 
-		
+		// thumbnails
+		add_theme_support( 'post-thumbnails' );
+
 		// padroniza imagens de todosos blogs
-		add_image_size( 'headline', 200, 200, true );
+		add_image_size( 'highlight', 400, 400, true );
+		add_image_size( 'highlight-small', 200, 200, true );
 			
 		// adicionando o menu
 		add_action( 'admin_menu', array(&$this, 'menus'));

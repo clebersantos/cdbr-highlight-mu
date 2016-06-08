@@ -56,7 +56,11 @@ class WidgetHighlightsMU extends WP_Widget
 		// show posts
 		if( $highlights ) {
 
-			//print $args[ 'before_widget' ];
+			print $args[ 'before_widget' ];
+
+			print '<div id="highlights">';
+
+				// print $title;
 
 			 	if( is_array( $highlights ) ) {
 
@@ -70,54 +74,46 @@ class WidgetHighlightsMU extends WP_Widget
 									
 								<?php $cycle = new WP_Query( "p={$highlight[ 'post_id' ]}" ); ?>
 								
-								<?php if( $cycle->have_posts() ) : $cycle->the_post(); 
+								<?php if( $cycle->have_posts() ) : $cycle->the_post(); ?>
+
+									<article id="post-<?php print get_the_ID(); ?>" class="<?php print strlen( $highlight[ 'highlight_excerpt' ]) <= 1  ? 'not-excerpt' : 'true-excerpt'; echo 'item-'.$i; ?>">
+										<a href="<?php print get_permalink(); ?>" title="<?php print $highlight[ 'highlight_title' ]; ?>">
+											<div class="entry-thumb">
+												<?php the_post_thumbnail( "highlight-small", "class=''" ); ?>
+											</div>
+
+											<div class="headline">
+
+												<?php $new_categories = null; ?>
+
+												<?php $new_categories = get_the_term_list( get_the_ID(), 'category', '', ', '); ?>
+
+												<?php if( $highlight[ 'blog_id' ] != 1 ) 
+												$new_categories = preg_replace("/\/blog\//", "/", get_the_category_list( ', ' ) ); ?>
+												
+												<p class="post-meta"><?php echo $new_categories; ?></p>
+												<div class="post-title"><a href="<?php print get_permalink(); ?>" title="<?php print get_the_title(); ?>"><?php print cdbr_limit_chars( $highlight[ 'highlight_title' ], $limit_title ); ?></a></div>
+												<div class="post-excerpt"><?php print cdbr_limit_chars( $highlight[ 'highlight_excerpt' ], $limit_excerpt ); ?></div>
+											</div>
+
+										</a>
+									</article>
 									
-									$new_categories = null;
-									$new_categories = get_the_term_list( get_the_ID(), 'category', '', ', ');
 
-									if( $highlight[ 'blog_id' ] != 1 ) 
-										$new_categories = preg_replace("/\/blog\//", "/", get_the_category_list( ', ' ) );
-
-									$class_excerpt = ( strlen( $highlight[ "highlight_excerpt" ]) <= 1 ) ? "not-excerpt" : "true-excerpt";
-
-									$entry 					= array();
-									$entry["ID"] 			= get_the_ID();
-									$entry["permalink"]  	= get_permalink();
-								 	$entry["categories"] 	= $new_categories;
-									$entry["thumbnail"]  	= get_the_post_thumbnail( null, "highlight-small" );
-									$entry["title"] 		= cdbr_limit_chars( $highlight[ "highlight_title" ], $limit_title );
-									$entry["excerpt"] 		= cdbr_limit_chars( $highlight[ "highlight_excerpt" ], $limit_excerpt );
-									
-									//var_dump($entry);
-									$c = "<article id='post-{$entry["ID"]}' class='{$class_excerpt} item-{$i}'>";
-									$c .=	"<a href='" . get_permalink() . "' title='" . $highlight[ "highlight_title" ] . "'>";
-									$c .=		"<div class='entry-thumb'>";
-									$c .=			get_the_post_thumbnail( null, 'highlight-small' );
-									$c .=		"</div>";
-									$c .=	"</a>";
-									$c .=	"<div class='entry-content'>";	
-									$c .=		"<p class='post-meta'>" . $new_categories . "</p>";
-									$c .=		"<div class='post-title'>";
-									$c .=			"<a href='" . get_permalink() . "' title='" . $highlight[ "highlight_title" ] . "'>";
-									$c .=  				cdbr_limit_chars( $highlight[ "highlight_title" ], $limit_title );
-									$c .=			"</a>";
-									$c .= 		"</div>";
-									$c .=		"<div class='post-excerpt'>" .  cdbr_limit_chars( $highlight[ "highlight_excerpt" ], $limit_excerpt ) . "</div>";
-									$c .=	"</div>";
-									$c .= "</article>";
-
-									$c = apply_filters( 'highlight_content', $c, $highlight, get_the_ID(), $new_categories );
-										
-									echo $c;
-									?>
 								<?php endif; ?>
 
 						<?php if( function_exists( 'restore_current_blog' ) ) restore_current_blog(); 
 
+						// print "</div>";
+						// print ( $i == 2 ) ? "</div><!-- close column-2 -->" : "";
+						// print ( $i == 5 ) ? "</div></div>" : ""; 
+
+			
 					}
 
 				}
-			//print $args[ 'after_widget' ];
+				print "</div><!-- close #highlights -->";
+			print $args[ 'after_widget' ];
 		}
 	}
 
