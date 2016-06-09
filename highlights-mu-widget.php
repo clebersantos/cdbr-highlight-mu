@@ -56,7 +56,8 @@ class WidgetHighlightsMU extends WP_Widget
 		// show posts
 		if( $highlights ) {
 
-			//print $args[ 'before_widget' ];
+			$before_widget = apply_filters( 'highlight_before_widget', $args[ 'before_widget' ] );
+			print $before_widget;
 
 			 	if( is_array( $highlights ) ) {
 
@@ -87,26 +88,22 @@ class WidgetHighlightsMU extends WP_Widget
 									$entry["thumbnail"]  	= get_the_post_thumbnail( null, "highlight-small" );
 									$entry["title"] 		= cdbr_limit_chars( $highlight[ "highlight_title" ], $limit_title );
 									$entry["excerpt"] 		= cdbr_limit_chars( $highlight[ "highlight_excerpt" ], $limit_excerpt );
-									
-									//var_dump($entry);
-									$c = "<article id='post-{$entry["ID"]}' class='{$class_excerpt} item-{$i}'>";
-									$c .=	"<a href='" . get_permalink() . "' title='" . $highlight[ "highlight_title" ] . "'>";
-									$c .=		"<div class='entry-thumb'>";
-									$c .=			get_the_post_thumbnail( null, 'highlight-small' );
-									$c .=		"</div>";
-									$c .=	"</a>";
-									$c .=	"<div class='entry-content'>";	
-									$c .=		"<p class='post-meta'>" . $new_categories . "</p>";
-									$c .=		"<div class='post-title'>";
-									$c .=			"<a href='" . get_permalink() . "' title='" . $highlight[ "highlight_title" ] . "'>";
-									$c .=  				cdbr_limit_chars( $highlight[ "highlight_title" ], $limit_title );
-									$c .=			"</a>";
-									$c .= 		"</div>";
-									$c .=		"<div class='post-excerpt'>" .  cdbr_limit_chars( $highlight[ "highlight_excerpt" ], $limit_excerpt ) . "</div>";
+									$entry["date"] 			= get_post_time('G', true);
+								
+									$c = "<article id='post-{$entry["ID"]}' class='card {$class_excerpt} item-{$i}'>";
+									$c .=	"<div class='entry-thumb'>";
+									$c .=		"<a href={$entry["permalink"]} title='{$highlight["highlight_title"]}'>{$entry["thumbnail"]}</a>";
 									$c .=	"</div>";
+									$c .=	"<header class='entry-header'>";	
+									$c .=		"<div class='entry-meta'>{$new_categories}</div>";
+									$c .=		"<h1 class='entry-title'>";
+									$c .=			"<a href={$entry["permalink"]}' title='{$highlight["highlight_title"]}'>{$entry["title"]}</a>";
+									$c .= 		"</h1>";
+									$c .=		"<div class='entry-excerpt'>{$entry["excerpt"]}</div>";
+									$c .=	"</header>";
 									$c .= "</article>";
 
-									$c = apply_filters( 'highlight_content', $c, $highlight, get_the_ID(), $new_categories );
+									$c = apply_filters( 'highlight_content_widget', $c, $highlight, $entry, get_the_ID() );
 										
 									echo $c;
 									?>
@@ -117,7 +114,9 @@ class WidgetHighlightsMU extends WP_Widget
 					}
 
 				}
-			//print $args[ 'after_widget' ];
+			
+			$after_widget = apply_filters( 'highlight_after_widget', $args[ 'after_widget' ]);
+			print $after_widget;
 		}
 	}
 
