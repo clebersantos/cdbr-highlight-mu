@@ -642,7 +642,7 @@ class HighlightsMU
 
 		// padroniza imagens de todosos blogs
 		add_image_size( 'highlight', 400, 400, true );
-		add_image_size( 'highlight-small', 200, 200, true );
+		add_image_size( 'highlight-small', 350, 220, true );
 			
 		// adicionando o menu
 		add_action( 'admin_menu', array(&$this, 'menus'));
