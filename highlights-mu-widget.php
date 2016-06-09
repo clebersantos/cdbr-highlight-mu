@@ -89,6 +89,7 @@ class WidgetHighlightsMU extends WP_Widget
 									$entry["title"] 		= cdbr_limit_chars( $highlight[ "highlight_title" ], $limit_title );
 									$entry["excerpt"] 		= cdbr_limit_chars( $highlight[ "highlight_excerpt" ], $limit_excerpt );
 									$entry["date"] 			= get_post_time('G', true);
+									$entry["interator"]     = $i;
 								
 									$c = "<article id='post-{$entry["ID"]}' class='card {$class_excerpt} item-{$i}'>";
 									$c .=	"<div class='entry-thumb'>";
